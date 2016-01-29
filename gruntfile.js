@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+    require('jit-grunt')(grunt);
 
     grunt.initConfig({
         jshint: {
@@ -11,21 +12,24 @@ module.exports = function(grunt) {
         },
 
         browserify: {
+            options: {
+                browserifyOptions: {
+                    debug: true
+                }
+            },
             // a separate dev task is needed for browserify here
             // ultimately another 'production' task will be added that will
             // minify the javascript file it builds
             dev: {
                 options: {
-                    debug: true
+                    plugin: [['minifyify']]
                 },
-                src: 'app/static/js/script.js',
-                dest: 'app/static/js-build.js'
+                files: {
+                    'app/static/js-build.js': 'app/static/js/script.js'
+                }
             },
             // separate browserify tasks that handles test spec files
             tests: {
-                options: {
-                    debug: true
-                },
                 files: {
                     'tests/testSpecs.js': ['tests/*.spec.js']
                 }
@@ -76,13 +80,6 @@ module.exports = function(grunt) {
             watch: ['watch:js', 'watch:css']
         }
     });
-
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-concurrent');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
 
     // run this task for development
     grunt.registerTask('default', ['jshint', 'browserify:tests', 'browserify:dev', 'jasmine:dev',
