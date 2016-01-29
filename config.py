@@ -25,11 +25,21 @@ class DevelopmentConfig(Config):
 
     # sessions which are used for managing flash messages. a secret
     # key must be declared in order to use sessions.
-    SECRET_KEY = os.environ.get("MICROSCOPIUM_SECRET_KEY") or "secret string"
+    SECRET_KEY = "secret string"
 
     MONGO_DBNAME = "microscopium"
 
+class DemoConfig(Config):
+    DEBUG = False
+
+    # sessions which are used for managing flash messages. a secret
+    # key must be declared in order to use sessions.
+    SECRET_KEY = os.environ.get("MICROSCOPIUM_SECRET_KEY")
+
+    MINIFY_HTML = True
+
 config = {
     "development": DevelopmentConfig,
-    "default": DevelopmentConfig
+    "default": DevelopmentConfig,
+    "demo": DemoConfig
 }
