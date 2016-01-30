@@ -89,7 +89,9 @@ def get_feature(screen_id, feature):
     find_query = {"screen": screen_id, "feature_name": feature}
     select_query = request.args.getlist("select")
 
-    result = mongo.db.features.find(find_query, fields=select_query)
+    result = mongo.db.features.find(find_query, fields={
+        "feature_dist_std": {"$slice": -1000}
+    })
 
     return dumps(result)
 
