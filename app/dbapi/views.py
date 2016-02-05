@@ -5,6 +5,36 @@ from flask import request
 from . import dbapi
 from app import mongo
 
+@dbapi.route("/<screen_id>/treatments/<gene_name>")
+def get_treatment(screen_id, gene_name):
+    find_query = {"gene_name": gene_name}
+    select = request.args.getlist("select")
+
+    select_query = dict()
+    select_query["_id"] = False
+
+    for field in select:
+        select_query[field] = True
+
+    result = mongo.db.treatments.find(find_query, fields=select_query)
+
+    return dumps(result)
+
+@dbapi.route("/<screen_id>/treatments")
+def get_treatments(screen_id):
+    find_query = {"screen": screen_id}
+    select = request.args.getlist("select")
+
+    select_query = dict()
+    select_query["_id"] = False
+
+    for field in select:
+        select_query[field] = True
+
+    result = mongo.db.treatments.find(find_query, fields=select_query)
+
+    return dumps(result)
+
 @dbapi.route("/<screen_id>/samples/<sample_id>/images")
 def get_images(screen_id, sample_id):
     """Get an image from the images collection.
