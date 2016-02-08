@@ -2,7 +2,8 @@ var History = require('./History.js');
 var Filter = require('./Filter.js');
 var FeatureDistributionHistogram = require('./FeatureDistributionHistogram.js');
 var FeatureVectorLineplot = require('./FeatureVectorLineplot.js');
-var NeighbourPlotCanvas = require('./NeighbourPlotCanvas.js');
+var TreatmentVectorLineplot = require('./TreatmentVectorLineplot.js');
+var TreatmentPlotCanvas = require('./TreatmentPlotCanvas.js');
 var NeighbourImages = require('./NeighbourImages.js');
 
 /**
@@ -10,10 +11,10 @@ var NeighbourImages = require('./NeighbourImages.js');
  *
  * @constructor
  */
-function UIController(screenData, sampleData) {
+function UIController(screenData, sampleData, treatmentData) {
     this.history = new History();
 
-    this._mountPlots(screenData, sampleData);
+    this._mountPlots(screenData, sampleData, treatmentData);
 }
 
 /**
@@ -23,15 +24,16 @@ function UIController(screenData, sampleData) {
  * @param sampleData - Sample document for the selected screen.
  * @private
  */
-UIController.prototype._mountPlots = function(screenData, sampleData) {
+UIController.prototype._mountPlots = function(screenData, sampleData, treatmentData) {
     this.neighbourImages = new NeighbourImages(screenData._id);
     this.featureDistributionHistogram =
         new FeatureDistributionHistogram(screenData, '#histplot');
+
     this.featureVectorLineplot =
-        new FeatureVectorLineplot(screenData._id, '#lineplot');
+        new TreatmentVectorLineplot(screenData._id, '#lineplot');
     this.neighbourPlotCanvas =
-        new NeighbourPlotCanvas(screenData._id, sampleData, '#neighbourplot');
-    this.filter = new Filter(sampleData, this.neighbourPlotCanvas);
+         new TreatmentPlotCanvas(screenData._id, treatmentData, '#neighbourplot');
+    // this.filter = new Filter(treatmentData);
 };
 
 /**
@@ -86,9 +88,12 @@ UIController.prototype.updateFeature = function(activeFeature) {
 UIController.prototype.updateSample = function(sampleId) {
     this.history.add(sampleId);
 
-    this.featureVectorLineplot.drawLineplot(sampleId);
-    this.neighbourPlotCanvas.updatePoint(sampleId);
     this.neighbourImages.getImages(sampleId);
+};
+
+UIController.prototype.updateTreatment = function(geneName) {
+    this.neighbourPlotCanvas.updatePoint(geneName);
+    this.featureVectorLineplot.drawLineplot(geneName);
 };
 
 UIController.prototype.updateView = function(dimension) {

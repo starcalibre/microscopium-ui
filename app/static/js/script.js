@@ -35,14 +35,26 @@ $(document).ready(function() {
         }
     });
 
+    var treatmentQuery = $.ajax({
+        type: 'GET',
+        url: '/api/' + SCREEN_ID + '/treatments?' + $.param({
+            'select': ['gene_name', 'dimension_reduce', 'samples.sample_id']
+        }, true),
+        dataType: 'json',
+        async: true,
+        error: function(err) {
+            alert(err);
+        }
+    });
+
     // send the request and load the UI when the data comes back
     startLoadingSpinner(spinner);
-    $.when(screenQuery, sampleQuery)
-        .done(function(screenData, sampleData) {
+    $.when(screenQuery, sampleQuery, treatmentQuery)
+        .done(function(screenData, sampleData, treatmentData) {
             $('.navbar-right').removeClass('hidden');
             $('#neighbourplot-options').removeClass('hidden');
             $('#dimensionality-reduction-select').val('tsne');
-            mountUI(screenData[0][0], sampleData[0]);
+            mountUI(screenData[0][0], sampleData[0], treatmentData[0]);
             stopLoadingSpinner(spinner);
         });
 
@@ -80,9 +92,9 @@ $(document).ready(function() {
      * @param screenData - Screen document for the selected screen.
      * @param sampleData - Sample document for the selected screen.
      */
-    function mountUI(screenData, sampleData) {
+    function mountUI(screenData, sampleData, treatmentData) {
         var $body = $('body');
-        var uiController = new UIController(screenData, sampleData);
+        var uiController = new UIController(screenData, sampleData, treatmentData);
 
         $('#back-button').on('click', function() {
             uiController.back();
@@ -102,6 +114,10 @@ $(document).ready(function() {
 
         $body.on('updateFilter', function(event, filterOutId) {
             uiController.updateFilter(filterOutId);
+        });
+
+        $body.on('updateTreatment', function(event, geneName) {
+            uiController.updateTreatment(geneName);
         });
 
         $body.on('updateSample', function(event, sampleId) {
