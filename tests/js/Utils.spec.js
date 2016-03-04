@@ -3,7 +3,7 @@
 // below are Jasmine methods passed to Karma for testing
 describe('Utils', function() {
     var _ = require('lodash');
-    var Utils = require('../app/static/js/utils/Utils.js');
+    var Utils = require('../../app/static/js/utils/Utils.js');
 
     // add findByValues function as lodash mixin so we can test its behaviour
     // in lodash chains

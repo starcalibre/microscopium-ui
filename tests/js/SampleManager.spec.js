@@ -1,6 +1,6 @@
 'use strict';
-var SampleManager = require('../app/static/js/SampleManager.js');
-var sampleStatus = require('../app/static/js/enums/sampleStatus.js');
+var SampleManager = require('../../app/static/js/SampleManager.js');
+var sampleStatus = require('../../app/static/js/enums/sampleStatus.js');
 var d3 = require('d3');
 var _ = require('lodash');
 

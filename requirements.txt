@@ -8,7 +8,10 @@ htmlmin==0.1.10
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
-pymongo==3.2.1
+py==1.4.31
+pymongo==2.8.1
+pytest==2.9.0
+selenium==2.52.0
 visitor==0.1.2
 Werkzeug==0.11.2
 wheel==0.26.0

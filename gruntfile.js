@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         jshint: {
-            all: ['app/static/js/**/*.js', 'tests/*.spec.js'],
+            all: ['app/static/js/**/*.js', 'tests/js/*.spec.js'],
             options: {
                 jshintrc: '.jshintrc'
             }
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                     debug: true
                 },
                 files: {
-                    'tests/testSpecs.js': ['tests/*.spec.js']
+                    'tests/js/testSpecs.js': ['tests/js/*.spec.js']
                 }
             }
         },
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         jasmine: {
             dev: {
                 options: {
-                    specs: 'tests/testSpecs.js'
+                    specs: 'tests/js/testSpecs.js'
                 }
             }
         },

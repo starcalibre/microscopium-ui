@@ -1,5 +1,5 @@
 'use strict';
-var Byteflag = require('../app/static/js/utils/Byteflag.js');
+var Byteflag = require('../../app/static/js/utils/Byteflag.js');
 
 describe('Byteflag', function() {
     describe('add', function() {
