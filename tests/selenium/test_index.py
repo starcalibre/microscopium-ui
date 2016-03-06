@@ -1,5 +1,6 @@
 import pytest
 from flask import url_for
+import json
 
 # create fixture for MongoDB test database
 @pytest.fixture(scope="module")
@@ -8,29 +9,14 @@ def test_db(request):
     client = MongoClient('localhost', 27017)
     test_db = client["microscopium-test"]
 
-    test_db.screens.insert({
-        "_id": "TEST_SCREEN_1",
-        "available_overlays": [],
-        "screen_features": ["feature1", "feature2", "feature3"],
-        "number_samples": 12,
-        "screen_desc": "Mock Screen data for testing screen with "
-                       "no overlay."
-    })
-
-    test_db.screens.insert({
-        "_id": "TEST_SCREEN_2",
-        "available_overlays": ["overlay_score"],
-        "screen_features": ["feature1", "feature2", "feature3"],
-        "number_samples": 12,
-        "screen_desc": "Mock Screen data for testing screen with "
-                       "overlay."
-    })
+    with open("tests/selenium/data/test_screens.json") as json_file:
+        test_data = json.load(json_file)
+        test_db.screens.insert(test_data)
 
     def teardown():
         client.drop_database("microscopium-test")
         client.close()
     request.addfinalizer(teardown)
-
     return test_db
 
 

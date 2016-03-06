@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "TEST_SCREEN_1",
+    "available_overlays": [],
+    "screen_features": [
+      "feature1",
+      "feature2",
+      "feature3"
+    ],
+    "number_samples": 12,
+    "screen_desc": "Mock Screen data for testing screen with no overlay."
+  },
+  {
+    "_id": "TEST_SCREEN_2",
+    "available_overlays": [
+      "overlay_score"
+    ],
+    "screen_features": [
+      "feature1",
+      "feature2",
+      "feature3"
+    ],
+    "number_samples": 12,
+    "screen_desc": "Mock Screen data for testing screen with overlay"
+  }
+]
