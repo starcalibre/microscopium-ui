@@ -9,7 +9,6 @@ htmlmin==0.1.10
 itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
-path.py==0.0.0
 pexpect==4.0.1
 pickleshare==0.6
 ptyprocess==0.5.1
