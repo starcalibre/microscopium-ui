@@ -31,6 +31,11 @@ def load_screen(screen_id):
     # get the overlays object if it exists
     overlays = screen_result.get("available_overlays")
 
+    # check that overlays isn't empty -- may as well not exist if it's
+    # empty :)
+    if len(overlays) == 0:
+        overlays = None
+
     # get list of screens in database, exclude "screen_features" field as
     # we don't need it here
     screens = mongo.db.screens.find({}, projection={"screen_features": False})
